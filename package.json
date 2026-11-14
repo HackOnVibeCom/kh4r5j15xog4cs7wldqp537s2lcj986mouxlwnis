@@ -1,0 +1,28 @@
+{
+  "name": "scamcheck",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Paste a suspicious message, get a straight answer, and send the warning to the people you love.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.8.0",
+    "next": "16.4.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tldts": "7.5.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  }
+}
