@@ -12,7 +12,7 @@ export function ProtectSomeone() {
   return (
     <section className="protect">
       <h2>Set it up for someone you worry about</h2>
-      <p>Parents and grandparents get the most scam messages. Send them a link that says it&apos;s from you, so they check before they click, call back or pay.</p>
+      <p>Send a parent or grandparent a link that says it&apos;s from you, so they check a message before they click, call back or pay.</p>
       <div className="row">
         <label htmlFor="from-name" className="sr-only">
           Your name

@@ -162,6 +162,7 @@ button, textarea, input { font: inherit; color: inherit; }
 }
 
 @media (max-width: 480px) {
-  .row .btn { flex: 1; justify-content: center; }
+  .row .btn { flex: 1 1 100%; justify-content: center; white-space: nowrap; }
+  .row .spacer { display: none; }
   .verdict h2 { font-size: 21px; }
 }
