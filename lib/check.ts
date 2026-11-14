@@ -1,5 +1,5 @@
 import { analyzeMessage, type AnalyzeInput } from "./analyze";
-import { extractLinks, linkPatternFlags } from "./links";
+import { defang, extractLinks, linkPatternFlags } from "./links";
 import { reportLinks } from "./rdap";
 import type { AiVerdict, CheckResult, LinkReport, RedFlag, Verdict } from "./schema";
 
@@ -47,14 +47,15 @@ export function mergeResult(ai: AiVerdict, links: LinkReport[], now: Date): Chec
   let verdict: Verdict = ai.verdict;
   if (strongSignals > 0 && verdict === "no_red_flags") verdict = "suspicious";
 
+  // Every link we show is defanged (hxxps://site[.]top) so no warning can send someone to the scam.
   return {
     verdict,
     headline: ai.headline,
     scamType: ai.scam_type,
-    message: ai.message_text,
-    flags,
+    message: defang(ai.message_text),
+    flags: flags.map((flag) => ({ ...flag, quote: defang(flag.quote), reason: defang(flag.reason) })),
     advice: ai.advice.slice(0, 4),
-    links,
+    links: links.map((link) => ({ ...link, url: defang(link.url) })),
     language: ai.language,
     checkedAt: now.toISOString(),
   };
