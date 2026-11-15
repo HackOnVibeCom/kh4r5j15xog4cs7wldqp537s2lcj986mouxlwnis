@@ -1,0 +1,8 @@
+# Never upload local secrets or working notes; keys are set in Vercel's settings instead.
+.env
+.env*.local
+HACKATHON.md
+.claude
+.wrangler
+.next
+node_modules
