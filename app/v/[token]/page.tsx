@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Footer, TopBar } from "@/components/Chrome";
 import { ResultView } from "@/components/ResultView";
 import { VERDICT_COPY } from "@/lib/copy";
+import { botUsername } from "@/lib/telegram";
 import { verifyShare } from "@/lib/token";
 import { WarnOthers } from "./WarnOthers";
 
@@ -24,7 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function WarningPage({ params }: Props) {
-  const result = verifyShare((await params).token);
+  const [{ token }, bot] = await Promise.all([params, botUsername()]);
+  const result = verifyShare(token);
   if (!result) notFound();
 
   return (
@@ -41,6 +43,15 @@ export default async function WarningPage({ params }: Props) {
         <Link href="/" className="btn">
           Check a message →
         </Link>
+        {bot && (
+          <p style={{ marginTop: 14, marginBottom: 0 }}>
+            Or forward it to{" "}
+            <a href={`https://t.me/${bot}`} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", fontWeight: 700 }}>
+              @{bot}
+            </a>{" "}
+            on Telegram.
+          </p>
+        )}
       </div>
       <Footer />
     </main>

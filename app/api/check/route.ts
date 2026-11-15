@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { AnalysisError, IMAGE_TYPES } from "@/lib/analyze";
 import { runCheck } from "@/lib/check";
+import { ERROR_COPY } from "@/lib/copy";
 import { createRateLimiter } from "@/lib/ratelimit";
 import { signShare } from "@/lib/token";
 
@@ -24,12 +25,7 @@ const BodySchema = z
 
 const allow = createRateLimiter({ limit: 12, windowMs: 10 * 60 * 1000 });
 
-const FRIENDLY: Record<AnalysisError["kind"], { status: number; error: string }> = {
-  config: { status: 503, error: "The checker isn't set up yet. Please try again later." },
-  busy: { status: 503, error: "Lots of people are checking messages right now. Please try again in a minute." },
-  refused: { status: 422, error: "We couldn't check this one. Don't act on the message until you've verified it another way." },
-  failed: { status: 502, error: "Something went wrong while checking. Please try again." },
-};
+const FRIENDLY = ERROR_COPY;
 
 export async function POST(request: Request): Promise<Response> {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";

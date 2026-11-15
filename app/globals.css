@@ -72,6 +72,9 @@ button, textarea, input { font: inherit; color: inherit; }
 .hero h1 { font-size: clamp(30px, 6vw, 42px); letter-spacing: -0.02em; }
 .hero p { color: var(--muted); font-size: 18px; margin: 12px 0 0; max-width: 34em; }
 
+.hero .telegram-line { font-size: 16px; margin-top: 10px; }
+.telegram-line a { font-weight: 600; }
+
 .from-banner { margin-top: 20px; padding: 14px 16px; border-radius: var(--radius); background: var(--calm-bg); color: var(--calm); font-weight: 500; }
 
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; margin-top: 24px; }

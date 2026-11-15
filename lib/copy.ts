@@ -1,4 +1,13 @@
+import type { AnalysisErrorKind } from "./ai-shared";
 import type { FlagSource, Verdict } from "./schema";
+
+/** What people see when a check can't finish, on the website and in the Telegram bot. */
+export const ERROR_COPY: Record<AnalysisErrorKind, { status: number; error: string }> = {
+  config: { status: 503, error: "The checker isn't set up yet. Please try again later." },
+  busy: { status: 503, error: "Lots of people are checking messages right now. Please try again in a minute." },
+  refused: { status: 422, error: "We couldn't check this one. Don't act on the message until you've verified it another way." },
+  failed: { status: 502, error: "Something went wrong while checking. Please try again." },
+};
 
 export const APP_NAME = "ScamCheck";
 
