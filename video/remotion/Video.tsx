@@ -97,7 +97,7 @@ export function Video(props: VideoProps) {
 
       {props.lines.map((l) => (
         <Sequence key={l.key} from={Math.round(l.at * fps)} durationInFrames={Math.ceil((l.duration + 0.3) * fps)}>
-          <Audio src={`${props.base}/${l.file}`} />
+          <Audio src={`${props.base}/${l.file}`} volume={1.6} />
         </Sequence>
       ))}
 
