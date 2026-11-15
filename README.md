@@ -8,19 +8,19 @@ Built for HackOnVibe November 2026 ("Zero-CAC IT product").
 
 ## The problem
 
-People lost $1.03 trillion to scams in a year, and only 4% of victims got their money back ([Global Anti-Scam Alliance, 2024](https://www.gasa.org/post/global-state-of-scams-report-2024-1-trillion-stolen-in-12-months-gasa-feedzai)). In the US alone, reported fraud losses reached $12.5 billion in 2024 ([FTC](https://www.ftc.gov/news-events/news/press-releases/2025/03/new-ftc-data-show-big-jump-reported-losses-fraud-125-billion-2024)).
+In 2024, Americans reported losing $12.5 billion to fraud, 25% more than the year before ([FTC](https://www.ftc.gov/news-events/news/press-releases/2025/03/new-ftc-data-show-big-jump-reported-losses-fraud-125-billion-2024)). Worldwide, a 58,000-person survey estimated $1.03 trillion lost in a year, with only 4% of victims getting their money back ([Global Anti-Scam Alliance, 2024](https://www.gasa.org/post/global-state-of-scams-report-2024-1-trillion-stolen-in-12-months-gasa-feedzai)).
 
 Scams arrive by text and WhatsApp, and they spread through family chats. Today the only check most people have is forwarding the message to a son or daughter and asking "is this real?"
 
 ## What it does
 
 1. **Paste the message or add a screenshot.** No account, works on any phone.
-2. **Get a straight answer:** "Likely scam", "Suspicious" or "No red flags found", with each warning sign highlighted in the message and explained in plain words. Links are checked against the public domain registry: a "bank" website registered three days ago is a fact, not a guess.
-3. **Send the warning on.** One tap creates a warning link for WhatsApp. Personal details are hidden and links in it can't be clicked. Whoever opens it can pass it on, or check their own message.
+2. **Get a straight answer:** "Likely scam", "Suspicious" or "No red flags found", with each warning sign highlighted in the message and explained in plain words, in the message's own language. Every link is looked up in the public domain registry, which shows how old the site is or that it doesn't exist at all. Those are facts, not guesses, and they're labeled that way.
+3. **Send the warning on.** One tap creates a warning link for WhatsApp. Your own name, account and card numbers and codes are hidden, and links in it can't be clicked. Whoever opens it can pass it on, or check their own message.
 
 ## Why it spreads by itself
 
-Scams travel through family and group chats, so the warning travels the same way. Every warning page ends with "Got a message like this? Check it free." And anyone can send a parent a link that opens with "Priya set this up for you": the person most likely to be targeted gets the checker from someone they trust.
+Scams travel through family and group chats, so the warning travels the same way. Every warning page ends with "Got a message like this? Check it free." And anyone can send a parent a link that opens with "Priya set this up for you", so the checker arrives from someone they trust. This is the design; there are no usage numbers yet.
 
 ## What's real
 

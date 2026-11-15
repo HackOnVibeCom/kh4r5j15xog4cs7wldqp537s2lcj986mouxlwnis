@@ -26,7 +26,7 @@ export function Footer() {
       </div>
       <div>
         Your message is sent to {ai} to be checked. We don&apos;t save it. Please don&apos;t paste passwords, PINs or full card
-        numbers. A warning link holds only the cleaned-up message, with personal details hidden and links made unclickable.
+        numbers. A warning link holds only the cleaned-up message: your own name, account and card numbers and codes are hidden, and links can&apos;t be clicked.
       </div>
     </footer>
   );

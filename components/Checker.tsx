@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EXAMPLES, VERDICT_COPY } from "@/lib/copy";
 import type { CheckResult } from "@/lib/schema";
 import { ResultView } from "./ResultView";
@@ -33,6 +33,11 @@ export function Checker() {
   const fileInput = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
+  // Scroll once the result is actually on the page, so nobody has to hunt for it below the form.
+  useEffect(() => {
+    if (outcome) resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [outcome]);
+
   async function attach(file: File | undefined) {
     if (!file || !file.type.startsWith("image/")) return;
     try {
@@ -64,7 +69,6 @@ export function Checker() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Something went wrong. Please try again.");
       setOutcome(json);
-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
     } finally {
@@ -178,8 +182,10 @@ export function Checker() {
           <div className="share">
             <h3>{outcome.result.verdict === "no_red_flags" ? "Share the result" : "Warn the people you love"}</h3>
             <p>
-              Scams spread through family and group chats. Send this warning the same way. Personal details are hidden and links
-              can't be clicked.
+              {outcome.result.verdict === "no_red_flags"
+                ? "Send the result to whoever asked you about this message."
+                : "Scams spread through family and group chats. Send this warning the same way."}{" "}
+              Your own details are hidden and links can&apos;t be clicked.
             </p>
             <ShareActions url={shareUrl} text={shareText} />
           </div>
