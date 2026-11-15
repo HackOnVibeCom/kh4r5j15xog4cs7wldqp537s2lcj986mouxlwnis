@@ -1,0 +1,26 @@
+{
+  "name": "scamcheck-video",
+  "private": true,
+  "type": "module",
+  "description": "The demo video: narrated walkthrough of the live app, built in code with Remotion and Deepgram.",
+  "scripts": {
+    "voice": "tsx src/voice.ts",
+    "record": "tsx src/record.ts",
+    "build": "tsx src/build.ts",
+    "render": "tsx src/render.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.541",
+    "@remotion/google-fonts": "4.0.541",
+    "@remotion/renderer": "4.0.541",
+    "playwright": "1.65.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.541",
+    "tsx": "4.23.15"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}
