@@ -2,7 +2,7 @@
 
 **Paste a message that feels off. Know in seconds if it's a scam, and why. Then warn your family in one tap.**
 
-**Try it: [scam-check-seven.vercel.app](https://scam-check-seven.vercel.app)** (free, no sign-up; tap an example to see a check in about 3 seconds)
+**Try it: [scam-check-seven.vercel.app](https://scam-check-seven.vercel.app)** (free, no sign-up; tap an example to see a check in about 3 seconds) · **[Watch the demo](https://youtu.be/4ZEaz_8Tfhc)** (1:45) · Telegram: [@ScamCheck2026Bot](https://t.me/ScamCheck2026Bot)
 
 Built for HackOnVibe November 2026 ("Zero-CAC IT product").
 
@@ -37,6 +37,8 @@ Free for people, forever. Revenue would come from organizations that need the sa
 ## Try it
 
 - Live app: https://scam-check-seven.vercel.app
+- Telegram: forward any message to [@ScamCheck2026Bot](https://t.me/ScamCheck2026Bot)
+- Demo video (1:45): https://youtu.be/4ZEaz_8Tfhc
 - Code: this repository
 
 ---
