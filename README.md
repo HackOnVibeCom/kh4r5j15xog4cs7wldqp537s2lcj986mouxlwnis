@@ -2,7 +2,9 @@
 
 **Paste a message that feels off. Know in seconds if it's a scam, and why. Then warn your family in one tap.**
 
-Free, no sign-up. Built for HackOnVibe November 2026 ("Zero-CAC IT product").
+**Try it: [scam-check-seven.vercel.app](https://scam-check-seven.vercel.app)** (free, no sign-up; tap an example to see a check in about 3 seconds)
+
+Built for HackOnVibe November 2026 ("Zero-CAC IT product").
 
 ## The problem
 
@@ -34,7 +36,7 @@ Free for people, forever. Revenue would come from organizations that need the sa
 
 ## Try it
 
-- Live app: _link added after the first deploy_
+- Live app: https://scam-check-seven.vercel.app
 - Code: this repository
 
 ---
