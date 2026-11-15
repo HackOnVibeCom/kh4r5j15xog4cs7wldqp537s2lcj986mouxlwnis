@@ -14,7 +14,7 @@ vi.mock("@google/genai", async (importOriginal) => {
 });
 
 const { ApiError } = await import("@google/genai");
-const { analyzeWithGemini, GEMINI_MODELS } = await import("@/lib/gemini");
+const { analyzeWithGemini, geminiModels, resetGeminiCooldowns } = await import("@/lib/gemini");
 const { activeProvider } = await import("@/lib/analyze");
 const { AnalysisError } = await import("@/lib/ai-shared");
 
@@ -24,7 +24,10 @@ const ok = (body: unknown) => ({ text: JSON.stringify(body), candidates: [{ fini
 describe("analyzeWithGemini", () => {
   beforeEach(() => {
     generateContent.mockReset();
+    resetGeminiCooldowns();
     vi.stubEnv("GEMINI_API_KEY", "test-key");
+    vi.stubEnv("GEMINI_MODEL", "");
+    vi.stubEnv("GEMINI_MODELS", "");
   });
   afterEach(() => vi.unstubAllEnvs());
 
@@ -32,7 +35,7 @@ describe("analyzeWithGemini", () => {
     generateContent.mockResolvedValue(ok(scamVerdict));
     await expect(analyzeWithGemini(input)).resolves.toEqual(scamVerdict);
     const request = generateContent.mock.calls[0][0];
-    expect(request.model).toBe(GEMINI_MODELS[0]);
+    expect(request.model).toBe(geminiModels()[0]);
     expect(request.config.responseMimeType).toBe("application/json");
     expect(request.config.responseJsonSchema).not.toHaveProperty("$schema");
     expect(request.contents[0].parts.at(-1).text).toContain("<message>");
@@ -43,7 +46,37 @@ describe("analyzeWithGemini", () => {
       .mockRejectedValueOnce(new ApiError({ message: "quota", status: 429 }))
       .mockResolvedValueOnce(ok(scamVerdict));
     await expect(analyzeWithGemini(input)).resolves.toEqual(scamVerdict);
-    expect(generateContent.mock.calls.map((call) => call[0].model)).toEqual(GEMINI_MODELS);
+    expect(generateContent.mock.calls.map((call) => call[0].model)).toEqual(geminiModels());
+  });
+
+  it("falls back on timeouts and overload, then skips the failing model for a while", async () => {
+    generateContent
+      .mockRejectedValueOnce(new DOMException("The operation timed out.", "TimeoutError"))
+      .mockResolvedValueOnce(ok(scamVerdict))
+      .mockResolvedValueOnce(ok(scamVerdict));
+    await analyzeWithGemini(input);
+    await analyzeWithGemini(input);
+    const [first, second] = geminiModels();
+    expect(generateContent.mock.calls.map((call) => call[0].model)).toEqual([first, second, second]);
+  });
+
+  it("retries an overloaded model once before moving on, without benching it", async () => {
+    generateContent
+      .mockRejectedValueOnce(new ApiError({ message: "high demand", status: 503 }))
+      .mockResolvedValueOnce(ok(scamVerdict))
+      .mockResolvedValueOnce(ok(scamVerdict));
+    const sleep = vi.fn(async () => {});
+    await analyzeWithGemini(input, { sleep });
+    await analyzeWithGemini(input, { sleep });
+    const [first] = geminiModels();
+    expect(generateContent.mock.calls.map((call) => call[0].model)).toEqual([first, first, first]);
+    expect(sleep).toHaveBeenCalledOnce();
+  });
+
+  it("puts a configured model such as Hydrogen first", () => {
+    vi.stubEnv("GEMINI_MODEL", "gemini-4-hydrogen");
+    expect(geminiModels()[0]).toBe("gemini-4-hydrogen");
+    expect(geminiModels()).toHaveLength(3);
   });
 
   it("reports 'busy' when every model is out of quota", async () => {

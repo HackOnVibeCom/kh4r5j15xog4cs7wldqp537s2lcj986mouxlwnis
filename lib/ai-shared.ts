@@ -31,7 +31,7 @@ How to judge:
 
 What to return:
 - message_text: the message as the person received it. For a screenshot, transcribe only the received message or messages, not the phone's interface. Replace the recipient's own details with placeholders: [name], [account number], [card number], [code], [address], [email]. Keep the sender's name, links and phone numbers, since they help others recognize the same scam.
-- red_flags: at most 5, most important first. Each quote is copied exactly from message_text, character for character, and short (a few words up to one sentence) so it can be highlighted.
+- red_flags: at most 5, most important first. Each quote is copied exactly from message_text, character for character, and short (a few words up to one sentence) so it can be highlighted. Use calm, accurate wording ("is not the company's official address", "real banks don't ask for this"). Never say a detail proves anything.
 - advice: 2 to 4 concrete steps for this situation, such as not clicking, not calling the number in the message, contacting the company through the number on its official website or card, never sharing codes. Do not invent phone numbers, websites or helplines.
 - If the input is not a message someone received, say so in the headline and use no_red_flags.`;
 

@@ -38,6 +38,22 @@ describe("lookupDomainAge", () => {
     expect(result.lookup).toBe("not_found");
   });
 
+  it("asks the registry IANA lists for the domain's ending, with a User-Agent", async () => {
+    const calls: Array<{ url: string; ua: string | null }> = [];
+    const routed = (async (url: string, init?: RequestInit) => {
+      calls.push({ url, ua: new Headers(init?.headers).get("user-agent") });
+      if (url.includes("data.iana.org")) {
+        return Response.json({ services: [[["top"], ["https://rdap.example-registry.top/"]]] });
+      }
+      return Response.json({ events: [{ eventAction: "registration", eventDate: "2026-11-01T00:00:00Z" }] });
+    }) as typeof fetch;
+
+    const result = await lookupDomainAge("routed-4.top", { fetchImpl: routed, now: NOW });
+    expect(result.ageDays).toBe(13);
+    expect(calls.map((c) => c.url)).toEqual(["https://data.iana.org/rdap/dns.json", "https://rdap.example-registry.top/domain/routed-4.top"]);
+    expect(calls.every((c) => c.ua?.startsWith("ScamCheck"))).toBe(true);
+  });
+
   it("degrades to unavailable when the registry fails", async () => {
     const failing = (async () => {
       throw new Error("network down");
