@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { activeProvider, PROVIDER_LABEL } from "@/lib/analyze";
 
 export function TopBar() {
   return (
@@ -15,6 +16,8 @@ export function TopBar() {
 }
 
 export function Footer() {
+  const provider = activeProvider();
+  const ai = provider ? PROVIDER_LABEL[provider] : "an AI service";
   return (
     <footer className="footer">
       <div>
@@ -22,8 +25,8 @@ export function Footer() {
         show which reasons come from the AI and which we checked ourselves.
       </div>
       <div>
-        Your message is sent to our AI to be checked and is not saved by us. A warning link holds only the cleaned-up message, with
-        personal details hidden and links made unclickable.
+        Your message is sent to {ai} to be checked. We don&apos;t save it. Please don&apos;t paste passwords, PINs or full card
+        numbers. A warning link holds only the cleaned-up message, with personal details hidden and links made unclickable.
       </div>
     </footer>
   );

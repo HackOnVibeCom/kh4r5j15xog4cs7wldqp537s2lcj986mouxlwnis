@@ -4,11 +4,12 @@ import { VERDICTS, type CheckResult } from "./schema";
 
 const SEPARATOR = "~";
 
-/** SHARE_SECRET if set; otherwise derived from the API key so a deploy needs one secret, not two. */
+/** SHARE_SECRET if set; otherwise derived from the AI key so a deploy needs one secret, not two. */
 export function signingSecret(): string {
   if (process.env.SHARE_SECRET) return process.env.SHARE_SECRET;
-  if (process.env.ANTHROPIC_API_KEY) {
-    return createHash("sha256").update(`share-links:${process.env.ANTHROPIC_API_KEY}`).digest("hex");
+  const aiKey = process.env.ANTHROPIC_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (aiKey) {
+    return createHash("sha256").update(`share-links:${aiKey}`).digest("hex");
   }
   if (process.env.NODE_ENV !== "production") return "local-development-only";
   throw new Error("No secret available to sign warning links.");

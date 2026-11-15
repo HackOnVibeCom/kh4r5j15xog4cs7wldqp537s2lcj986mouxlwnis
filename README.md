@@ -43,8 +43,8 @@ Free for people, forever. Revenue would come from organizations that need the sa
 
 ```
 Browser ──POST /api/check──▶ Next.js route (Node)
-                              ├─ Claude (claude-opus-5-5): reads text or screenshot,
-                              │  returns a structured verdict (Zod schema, structured outputs)
+                              ├─ AI reads text or screenshot and returns a structured verdict
+                              │  (one Zod schema; Google Gemini or Anthropic Claude, set by env)
                               ├─ RDAP lookups for every link (in parallel with the AI for pasted text)
                               ├─ code checks: look-alike brands, punycode, URL shorteners
                               └─ merge: measured facts can raise the verdict, never lower it
@@ -55,7 +55,10 @@ Browser ──POST /api/check──▶ Next.js route (Node)
 
 | Path | What it does |
 |---|---|
-| `lib/analyze.ts` | The Claude call and prompt. Structured output, refusal fallback, typed errors. |
+| `lib/ai-shared.ts` | The prompt, input type and error kinds shared by both AI providers. |
+| `lib/gemini.ts` | Gemini call with JSON-schema output; falls back to Flash-Lite when the free quota runs out. |
+| `lib/claude.ts` | Claude call with structured output and refusal fallback. |
+| `lib/analyze.ts` | Picks the provider from the server's keys. |
 | `lib/links.ts` | Finds links in text, brand and look-alike checks, defanging (`hxxps://site[.]top`). |
 | `lib/rdap.ts` | Domain registration date from the public registry, cached, with a 4-second timeout. |
 | `lib/check.ts` | Runs the AI and the lookups, merges them into one result. |
@@ -67,9 +70,9 @@ Browser ──POST /api/check──▶ Next.js route (Node)
 
 ```bash
 npm install
-cp .env.example .env.local   # then put your Anthropic API key in it
+cp .env.example .env.local   # then add one AI key to .env.local (never to .env.example)
 npm run dev                  # http://localhost:3000
-npm test                     # 30 tests: links, registry parsing, tokens, merging, API route
+npm test                     # 37 tests: links, registry parsing, tokens, merging, both AI paths, API route
 ```
 
-`ANTHROPIC_API_KEY` is the only required setting. `SHARE_SECRET` is optional; without it, the warning-link signing key is derived from the API key on the server.
+Set one AI key: `GEMINI_API_KEY` (free from Google AI Studio) or `ANTHROPIC_API_KEY`. If both are set, Claude is used unless `AI_PROVIDER=gemini`. `GEMINI_MODEL` overrides the default Gemini model. `SHARE_SECRET` is optional; without it, the warning-link signing key is derived from the AI key on the server.
